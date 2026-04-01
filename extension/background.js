@@ -113,6 +113,9 @@ async function handleToolRequest(msg) {
       case 'screenshot':
         result = await toolScreenshot(params);
         break;
+      case 'focus_tab':
+        result = await toolFocusTab(params);
+        break;
       case 'inject_script':
         result = await toolInjectScript(params);
         break;
@@ -170,6 +173,15 @@ async function toolScreenshot(params) {
   }
   const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, { format: 'png' });
   return dataUrl;
+}
+
+async function toolFocusTab(params) {
+  const { tabId } = params;
+  if (tabId == null) throw new Error('tabId is required');
+  const tab = await chrome.tabs.get(tabId);
+  await chrome.tabs.update(tab.id, { active: true });
+  await chrome.windows.update(tab.windowId, { focused: true });
+  return { ok: true };
 }
 
 async function toolInjectScript(params) {

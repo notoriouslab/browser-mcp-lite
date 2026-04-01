@@ -33,12 +33,23 @@ export function registerTools(server) {
     }
   );
 
+  // --- focus_tab ---
+  server.tool(
+    'focus_tab',
+    'Switch to a specific browser tab (bring it to the foreground)',
+    { tabId: z.number().describe('Tab ID to focus.') },
+    async ({ tabId }) => {
+      await sendToExtension('focus_tab', { tabId });
+      return { content: [{ type: 'text', text: `Focused tab ${tabId}` }] };
+    }
+  );
+
   // --- inject_script ---
   server.tool(
     'inject_script',
     'Execute custom JavaScript code in a browser tab and return the result',
     {
-      code: z.string().describe('JavaScript code to execute. Must return a JSON-serializable value.'),
+      code: z.string().max(10000).describe('JavaScript code to execute (max 10,000 chars). Must return a JSON-serializable value.'),
       tabId: z.number().optional().describe('Tab ID to inject into. Defaults to the active tab.'),
     },
     async ({ code, tabId }) => {
