@@ -135,7 +135,8 @@ async function toolListTabs() {
 const RESTRICTED_PREFIXES = ['chrome://', 'chrome-extension://', 'about:', 'file://', 'data:'];
 
 function isRestricted(url) {
-  return !url || RESTRICTED_PREFIXES.some(p => url.startsWith(p));
+  const lower = (url || '').toLowerCase();
+  return !url || RESTRICTED_PREFIXES.some(p => lower.startsWith(p));
 }
 
 async function getTargetTab(tabId) {

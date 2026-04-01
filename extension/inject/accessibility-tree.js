@@ -157,7 +157,10 @@
       if (/^H[1-6]$/.test(tag)) parts.push(`level=${tag[1]}`);
       if (label) parts.push(`"${label}"`);
       if (el.value && ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) {
-        parts.push(`value="${truncate(el.value)}"`);
+        const inputType = (el.type || '').toLowerCase();
+        if (inputType !== 'password') {
+          parts.push(`value="${truncate(el.value)}"`);
+        }
       }
       if (el.checked) parts.push('checked');
       if (el.disabled) parts.push('disabled');

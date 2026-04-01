@@ -201,7 +201,9 @@ Cursor：Settings → MCP → Add Server：
 - **`screenshot`** 會擷取畫面上的一切，包括密碼、個人資料或私人內容。
 - **`screenshot` 會切換分頁**：Chrome 的 `captureVisibleTab` API 只能擷取目前顯示的分頁。如果你截圖一個背景分頁，它會短暫切到前景。
 
-**建議**：只在需要時啟動 server。使用前關閉敏感分頁。先用 `list_tabs` 檢查 AI 助手能看到什麼，再呼叫其他工具。
+**Prompt injection 風險**：惡意網頁可能包含隱藏文字，誘導 AI 助手在其他分頁呼叫 `inject_script` 執行有害程式碼。請務必在核准前檢視工具呼叫內容。不要對 `inject_script` 設定自動核准。
+
+**建議**：只在需要時啟動 server。使用前關閉敏感分頁。先用 `list_tabs` 檢查 AI 助手能看到什麼，再呼叫其他工具。MCP client 裡不要設定自動核准工具呼叫。
 
 ### MV3 Service Worker 存活機制
 

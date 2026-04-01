@@ -203,7 +203,9 @@ A typical web page has 50-200KB of HTML. An accessibility tree of the same page 
 - **`screenshot`** captures whatever is on screen, including passwords, personal data, or private content.
 - **`screenshot` switches tabs**: Chrome's `captureVisibleTab` API can only capture the active tab. If you screenshot a background tab, it will be briefly switched to the foreground.
 
-**Mitigations**: Only run the server when you need it. Close sensitive tabs before use. Review what your AI assistant can see via `list_tabs` before calling other tools.
+**Prompt injection risk**: A malicious web page could contain hidden text that tricks your AI assistant into calling `inject_script` with harmful code on other tabs. Always review tool calls before approving them. Do not auto-approve `inject_script` calls.
+
+**Mitigations**: Only run the server when you need it. Close sensitive tabs before use. Review what your AI assistant can see via `list_tabs` before calling other tools. Never auto-approve tool calls in your MCP client.
 
 ### MV3 Service Worker survival
 
