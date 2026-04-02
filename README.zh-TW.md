@@ -1,5 +1,11 @@
 # browser-mcp-lite
 
+[![npm version](https://img.shields.io/npm/v/browser-mcp-lite?color=cb3837&logo=npm)](https://www.npmjs.com/package/browser-mcp-lite)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MCP](https://img.shields.io/badge/MCP-compatible-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPjxyZWN0IHg9IjIiIHk9IjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcng9IjMiLz48cGF0aCBkPSJNOCA4aDgiLz48cGF0aCBkPSJNOCAxMmg4Ii8+PHBhdGggZD0iTTggMTZoNSIvPjwvc3ZnPg==)](https://modelcontextprotocol.io)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
+[![Code Style: ~500 lines](https://img.shields.io/badge/Code-~500_lines-green)](https://github.com/notoriouslab/browser-mcp-lite)
+
 繁體中文 | [English](README.md)
 
 **讓你的 AI 助手看見你的真實瀏覽器 — 只要 ~500 行程式碼。**

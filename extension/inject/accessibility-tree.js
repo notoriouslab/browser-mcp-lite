@@ -23,11 +23,21 @@
   // --- Visibility ---
   function isVisible(el) {
     if (!(el instanceof HTMLElement)) return true;
+    // aria-hidden elements are invisible to assistive tech (and can hide injection text)
+    if (el.getAttribute('aria-hidden') === 'true') return false;
     const style = getComputedStyle(el);
     if (style.display === 'none') return false;
     if (style.visibility === 'hidden' || style.visibility === 'collapse') return false;
     if (parseFloat(style.opacity) === 0) return false;
     if (el.offsetWidth === 0 && el.offsetHeight === 0 && style.overflow === 'hidden') return false;
+    // Font-size zero — invisible to humans, visible to DOM readers
+    if (parseFloat(style.fontSize) < 2) return false;
+    // Positioned off-screen (common injection hiding technique)
+    const left = parseFloat(style.left);
+    const top = parseFloat(style.top);
+    if (style.position === 'absolute' && (left < -999 || top < -999)) return false;
+    // Clip-based hiding (clip-path or clip rect to zero area)
+    if (style.clipPath === 'inset(100%)' || style.clip === 'rect(0, 0, 0, 0)' || style.clip === 'rect(0px, 0px, 0px, 0px)') return false;
     return true;
   }
 
@@ -96,7 +106,8 @@
 
   function truncate(text) {
     if (!text) return '';
-    const clean = text.replace(/\s+/g, ' ').trim();
+    // Strip zero-width and bidirectional control characters (prompt injection vector)
+    const clean = text.replace(/[\u200B\u200C\u200D\uFEFF\u2060\u180E\u200E\u200F\u202A-\u202E\u2066-\u2069]/g, '').replace(/\s+/g, ' ').trim();
     return clean.length > MAX_LABEL ? clean.slice(0, MAX_LABEL) + '...' : clean;
   }
 

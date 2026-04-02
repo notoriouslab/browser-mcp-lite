@@ -1,6 +1,22 @@
 import { z } from 'zod';
 import { sendToExtension } from './index.js';
 
+// --- inject_script risk detection ---
+const RISK_PATTERNS = [
+  { pattern: /\b(fetch|XMLHttpRequest|sendBeacon|navigator\.sendBeacon)\s*\(/i, label: 'network request' },
+  { pattern: /document\.cookie/i, label: 'cookie access' },
+  { pattern: /localStorage|sessionStorage/i, label: 'storage access' },
+  { pattern: /indexedDB/i, label: 'IndexedDB access' },
+  { pattern: /new\s+WebSocket\s*\(/i, label: 'WebSocket connection' },
+  { pattern: /new\s+EventSource\s*\(/i, label: 'EventSource connection' },
+  { pattern: /window\.open\s*\(/i, label: 'window.open' },
+  { pattern: /document\.write/i, label: 'document.write' },
+];
+
+function detectRisks(code) {
+  return RISK_PATTERNS.filter(r => r.pattern.test(code)).map(r => r.label);
+}
+
 export function registerTools(server) {
 
   // --- list_tabs ---
@@ -53,8 +69,14 @@ export function registerTools(server) {
       tabId: z.number().optional().describe('Tab ID to inject into. Defaults to the active tab.'),
     },
     async ({ code, tabId }) => {
+      const risks = detectRisks(code);
       const result = await sendToExtension('inject_script', { code, tabId });
-      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+      const output = JSON.stringify(result, null, 2);
+      if (risks.length > 0) {
+        const warning = `\u26A0 RISK: This script uses ${risks.join(', ')}. Verify this was intentional.`;
+        return { content: [{ type: 'text', text: `${warning}\n\n${output}` }] };
+      }
+      return { content: [{ type: 'text', text: output }] };
     }
   );
 }

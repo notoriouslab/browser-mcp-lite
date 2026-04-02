@@ -1,6 +1,6 @@
 {
   "name": "browser-mcp-lite",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Minimal, auth-secured MCP server for real browser access",
   "type": "module",
   "main": "index.js",
