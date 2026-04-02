@@ -9,3 +9,9 @@ node_modules/
 
 # Spectra
 openspec/
+
+# Spectra / Claude Code (local dev config, not part of the project)
+.spectra/
+openspec/
+.claude/
+CLAUDE.md
