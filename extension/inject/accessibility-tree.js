@@ -158,7 +158,7 @@
       if (label) parts.push(`"${label}"`);
       if (el.value && ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) {
         const inputType = (el.type || '').toLowerCase();
-        if (inputType !== 'password') {
+        if (inputType !== 'password' && inputType !== 'hidden') {
           parts.push(`value="${truncate(el.value)}"`);
         }
       }

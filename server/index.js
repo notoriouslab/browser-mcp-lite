@@ -173,22 +173,25 @@ const sep = '\u2501'.repeat(53);
 
 console.log(`[browser-mcp-lite] MCP server: ${mcpUrl}`);
 console.log(`[browser-mcp-lite] WebSocket:  ${wsUrl}`);
-if (isNew) console.log('\n\u26A0 First run \u2014 new token generated');
 
-console.log(`\n\u2501\u2501\u2501 Auth Token (paste into Chrome Extension popup) \u2501\u2501\u2501`);
-console.log(TOKEN);
-console.log(sep);
-
-console.log(`\n\u2501\u2501\u2501 MCP Client Config (save as .mcp.json) \u2501\u2501\u2501`);
-console.log(JSON.stringify({
-  mcpServers: {
-    browser: {
-      type: 'http',
-      url: mcpUrl,
-      headers: { Authorization: `Bearer ${TOKEN}` },
+if (isNew) {
+  console.log('\n\u26A0 First run \u2014 new token generated');
+  console.log(`\n\u2501\u2501\u2501 Auth Token (paste into Chrome Extension popup) \u2501\u2501\u2501`);
+  console.log(TOKEN);
+  console.log(sep);
+  console.log(`\n\u2501\u2501\u2501 MCP Client Config (save as .mcp.json) \u2501\u2501\u2501`);
+  console.log(JSON.stringify({
+    mcpServers: {
+      browser: {
+        type: 'http',
+        url: mcpUrl,
+        headers: { Authorization: `Bearer ${TOKEN}` },
+      },
     },
-  },
-}, null, 2));
-console.log(sep);
+  }, null, 2));
+  console.log(sep);
+} else {
+  console.log(`[browser-mcp-lite] Token: ${TOKEN.slice(0, 8)}...`);
+}
 
 console.log('\n[browser-mcp-lite] Waiting for Chrome Extension...');

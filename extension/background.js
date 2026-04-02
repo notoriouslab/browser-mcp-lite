@@ -179,6 +179,7 @@ async function toolFocusTab(params) {
   const { tabId } = params;
   if (tabId == null) throw new Error('tabId is required');
   const tab = await chrome.tabs.get(tabId);
+  if (isRestricted(tab.url)) throw new Error('Cannot focus this type of page');
   await chrome.tabs.update(tab.id, { active: true });
   await chrome.windows.update(tab.windowId, { focused: true });
   return { ok: true };
